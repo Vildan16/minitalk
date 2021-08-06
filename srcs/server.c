@@ -34,16 +34,41 @@ void	ft_putnbr(int n)
 		ft_putchar(a[i]);
 }
 
-void    ft_handle(int signum)
+int		ft_power(int i)
 {
-	int i;
+	int		j;
+	int		power;
 
-	i = 0;
-	while (i < 8)
+	if (i == 0)
+		return (1);
+	j = 0;
+	power = 1;
+	while (j < i)
 	{
-		
+		power *= 2;
+		j++;
 	}
-	
+	return (power);
+}
+
+void	ft_handle(int signum)
+{
+	int				signal;
+	static int		c;
+	static int		i;
+
+	if (signum == SIGUSR1)
+		signal = 1;
+	else
+		signal = 0;
+	c += ft_power(i) * signal;
+	i++;
+	if (i == 8)
+	{
+		ft_putchar(c);
+		i = 0;
+		c = 0;
+	}
 }
 
 int main(void)
@@ -56,6 +81,8 @@ int main(void)
 	write(1, "\n", 1);
 	signal(SIGUSR1, ft_handle);
 	signal(SIGUSR2, ft_handle);
+	char *c = "\u2764";
+    write(1, c, 3);
 	while (1)
 		pause();
 	return (0);

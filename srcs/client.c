@@ -30,17 +30,19 @@ int		ft_atoi(const char *nptr)
 int ft_send(int pid, char *str)
 {
     int i;
-    
+
     while(*str)
     {
-        i = 7;
-        while (i <= 0)
+        i = 0;
+        while (i <= 7)
         {
-            if (*str & (1 << i))
+            if (*str % 2)
                 kill(pid, SIGUSR1);
             else
                 kill(pid, SIGUSR2);
-            i--;
+            *str /= 2;
+            i++;
+            usleep(50);
         }
         str++;
     }
@@ -57,7 +59,7 @@ int main(int ac, char **av)
         return (0);
     }
     pid = ft_atoi(av[1]);
-    if (pid < 0 || pid > 30000)
+    if (pid < 0 || pid > 99998)
     {
         write(1, "Error\nWrong pid\n", 18);
         return (0);
