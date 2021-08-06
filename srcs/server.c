@@ -36,6 +36,13 @@ void	ft_putnbr(int n)
 
 void    ft_handle(int signum)
 {
+	int i;
+
+	i = 0;
+	while (i < 8)
+	{
+		
+	}
 	
 }
 
@@ -49,7 +56,7 @@ int main(void)
 	write(1, "\n", 1);
 	signal(SIGUSR1, ft_handle);
 	signal(SIGUSR2, ft_handle);
-
-
+	while (1)
+		pause();
 	return (0);
 }
